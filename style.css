@@ -6,3 +6,27 @@ body{
 canvas#simpleCanvas{
     border:1px lightgray solid;
 }
+#menu{
+    display:flex;
+    flex-wrap: wrap;
+}
+#controler{
+    width: 150px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid lightgray;
+}
+#controler input, label{
+    margin:5px;
+    max-width: 80%;
+}
+.diagram {
+    width: 150px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid lightgray;
+}
+.diagram input, label{
+    margin:5px;
+    max-width: 80%;
+}

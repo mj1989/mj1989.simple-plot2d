@@ -11,6 +11,17 @@
 </head>
 <body>
     <canvas id="simpleCanvas"></canvas>
+    <div id="menu">
+        <div id="controler">
+            <form action="addDiagram">
+                <label for="asd">Insert plot:</label>
+                <input type="text" value="sin(x)" id="formula_value">
+                <input type="button" value="add" id="add_diagram_button">
+                <input type="button" value="remove last" class="remove_diagram_button">
+            </form>
+        </div>
+        
+    </div>
     <script type="module" src="simplePlot.js"></script>
     
 </body>

@@ -5,12 +5,11 @@ import {CartesianCoordinateSystem} from "./cartesiancoordinatesystem.js";
 const myCanvas = document.getElementById("simpleCanvas");
 
 
-// set up canvas width and height and its position (margin left)
-myCanvas.width = window.innerWidth/2;
-myCanvas.height = window.innerHeight*2/3;
-var margin_left = window.innerWidth/4;
-myCanvas.style.left = margin_left.toString()+'px';
-myCanvas.style.position = 'absolute';
+// set up canvas width and height
+myCanvas.width = window.innerWidth;
+myCanvas.height = window.innerHeight*0.8;
+
+
 
 // create object and draw axis
 var someCartesianCS = new CartesianCoordinateSystem(myCanvas, 1, 5);
@@ -19,31 +18,7 @@ someCartesianCS.draw_entire_ccs();
 // create diagram
 // Diagram(string formula, ragne start x, range end x, color, line-width, linestyle)
 
-var someDiagram = new Diagram(
-    someCartesianCS,
-    '2*cos(10*x)*exp(-x^2)',
-    'blue', 2);
-var secondDiag = new Diagram(
-    someCartesianCS,
-    'sin(x)',
-    'red', 1);
-var thirdDiag = new Diagram(
-    someCartesianCS,
-    'sin(x)*sin(x)+1',
-    'green', 0.5);
 
-var linearDiagram = new Diagram(
-    someCartesianCS,
-    'x',
-    'yellow', 0.6);
-
-var quadraticDiagram = new Diagram(
-    someCartesianCS,
-    'x^2',
-    'purple', 0.7);
-someCartesianCS.append_diagrams_to_list([secondDiag, thirdDiag, someDiagram, linearDiagram, quadraticDiagram]);
-someCartesianCS.draw_diagrams();
-someCartesianCS.plot_diagrams();
 
 // how to move entire ccs with diagrams?
 let is_ccs_movig = false;
@@ -88,6 +63,57 @@ function resize_ccs_and_diagrams(wheel) {
 }
 
 myCanvas.addEventListener("wheel", resize_ccs_and_diagrams);
+
+/*
+* front end section for UI
+* interation goal is to add new diagram and remove
+*/
+const menu = document.getElementById('menu');
+console.log(menu);
+
+//listener for add button
+const addDiagramButton = document.getElementById('add_diagram_button');
+let removeDiagramButtons = document.getElementsByClassName('remove_diagram_button');
+
+// testme
+function addDiagramDiv(){
+    let stringFormulatoPlot = document.getElementById('formula_value').value;
+        menu.lastElementChild.insertAdjacentHTML('afterend',
+    '<div class="diagram">'+
+    '<form action="">'+
+    '<label for="fformula">formula:</label>'+
+    '<input type="text" value="' + stringFormulatoPlot +'">'+
+    '</form></div>');
+    removeDiagramButtons = document.getElementsByClassName('remove_diagram_button');
+    removeDiagramButtons.forEach(remDiagramButton => {
+        remDiagramButton.addEventListener('click', removeLastDiagramDiv);
+    });
+    //adding plot
+    // random color
+    let random_color = 'rgb('+Math.random()*255+', '+Math.random()*255+', '+Math.random()*255+')';
+    someCartesianCS.append_diagram_to_list(new Diagram(
+        someCartesianCS,
+        stringFormulatoPlot,
+        random_color, 0.7));
+    someCartesianCS.draw_diagrams();
+    someCartesianCS.plot_diagrams();
+    console.log(someCartesianCS.list_of_diagrams);
+    
+}
+function removeLastDiagramDiv(){
+    menu.lastElementChild.remove();
+    someCartesianCS.remove_last_diagram_from_list();
+    someCartesianCS.draw_entire_ccs();
+    someCartesianCS.draw_diagrams();
+    someCartesianCS.plot_diagrams();
+    console.log(someCartesianCS.list_of_diagrams);
+
+}
+// event listener for add button
+addDiagramButton.addEventListener('click', addDiagramDiv);
+removeDiagramButtons.forEach(remDiagramButton => {
+    remDiagramButton.addEventListener('click', removeLastDiagramDiv);
+});
 
 
 

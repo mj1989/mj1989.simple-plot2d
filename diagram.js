@@ -31,7 +31,7 @@ export class Diagram {
     create_graph(){
         this.array_of_Points = [];
         // drawing plot
-        var howmanypoints = 300;
+        var howmanypoints = 1000;
         var s_range_x  = this.range_x.start_x;
         var e_range_x = this.range_x.end_x;
         var step = (e_range_x - s_range_x)/howmanypoints;
