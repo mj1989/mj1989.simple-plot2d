@@ -57,7 +57,8 @@ function startPosition(e){
 function finishedPosition(){
     is_ccs_movig = false;
 }
-function draw_test(e){
+// moving entire coordinate system and all diagram like a map
+function move_ccs_and_diagrams(e){
     if(!is_ccs_movig) return;
     //console.log(someCartesianCS);
     //someCartesianCS.change_origin_x_y_absolute(e.offsetX, e.offsetY);
@@ -74,11 +75,11 @@ function draw_test(e){
 // adding event listeners to my canvas
 myCanvas.addEventListener("mousedown", startPosition);
 myCanvas.addEventListener("mouseup", finishedPosition);
-myCanvas.addEventListener("mousemove", draw_test);
+myCanvas.addEventListener("mousemove", move_ccs_and_diagrams);
 
 
-
-function doSomething(wheel) {
+// resizing, scalling entire coordinate systems with ticks and diagrams
+function resize_ccs_and_diagrams(wheel) {
   // Do something with the scroll position
    someCartesianCS.change_scale(wheel.deltaY,wheel.deltaY)
    someCartesianCS.draw_entire_ccs();
@@ -86,7 +87,7 @@ function doSomething(wheel) {
    someCartesianCS.plot_diagrams();
 }
 
-myCanvas.addEventListener("wheel", doSomething);
+myCanvas.addEventListener("wheel", resize_ccs_and_diagrams);
 
 
 
