@@ -92,8 +92,8 @@ export class CartesianCoordinateSystem {
     }
     // changing scale for scrolling effect
     change_scale(kx, ky){
-        if(this.scale_x + kx/10 < 5) return;
-        if(this.scale_x + kx/10 > 250) return;
+        if(this.scale_x + kx/10 < 20) return;
+        if(this.scale_x + kx/10 > 300) return;
         this.scale_x = this.scale_x + kx/10;
         this.scale_y = this.scale_y + ky/10;
         // scalling ticks for x and y axis
@@ -102,9 +102,7 @@ export class CartesianCoordinateSystem {
         }
         if(kx > 0){
             this.ticksize = this.ticksize + 2;
-        }
-        
-        
+        }        
         this.change_origin_x_y_absolute(this.origin.x, this.origin.y);
     }
 
