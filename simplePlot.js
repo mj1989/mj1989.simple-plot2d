@@ -13,7 +13,7 @@ myCanvas.style.left = margin_left.toString()+'px';
 myCanvas.style.position = 'absolute';
 
 // create object and draw axis
-var someCartesianCS = new CartesianCoordinateSystem(myCanvas);
+var someCartesianCS = new CartesianCoordinateSystem(myCanvas, 1, 10);
 someCartesianCS.draw_entire_ccs();
 
 // create diagram

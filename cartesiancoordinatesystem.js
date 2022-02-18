@@ -1,6 +1,6 @@
 // definition of the class the coordinate system
 export class CartesianCoordinateSystem {
-    constructor(canvas){
+    constructor(canvas, step_xy, ticksize){
         this.canvas = canvas;
         this.context = this.canvas.getContext('2d');
         this.width = this.canvas.width;
@@ -10,6 +10,10 @@ export class CartesianCoordinateSystem {
             x : this.width/2,
             y : this.height/2
         }
+        // set step_xy which is lenght between tick on x and y axis
+        this.step_xy = step_xy;
+        // and set tick size which is lenght of a ticks on x and y axis
+        this.ticksize = ticksize;
         // set axis x and y scales and ranges
         // idea is to go from width and height in pixeld to xy coord
         this.scale_x = 100; // 40px is one, 80px is two
@@ -92,8 +96,18 @@ export class CartesianCoordinateSystem {
         if(this.scale_x + kx/10 > 250) return;
         this.scale_x = this.scale_x + kx/10;
         this.scale_y = this.scale_y + ky/10;
+        // scalling ticks for x and y axis
+        if(kx < 0 && this.ticksize > 1){
+            this.ticksize = this.ticksize - 2;
+        }
+        if(kx > 0){
+            this.ticksize = this.ticksize + 2;
+        }
+        
+        
         this.change_origin_x_y_absolute(this.origin.x, this.origin.y);
     }
+
 
 
     // draw x-axis method
@@ -167,25 +181,27 @@ export class CartesianCoordinateSystem {
 
     }
     // draw ticks for x axis
-    draw_ticks_for_x(step_x){
+    draw_ticks_for_x(){
+        var step_x = this.step_xy;
         var step = step_x * this.scale_x;
-        var sizeoftick = 5;
+        
         let index = 1;
         while(index*step_x < Math.abs(this.range_x.end_x) || index*step_x < Math.abs(this.range_x.start_x)){
-            this.draw_tick(this.origin.x + index * step, this.origin.y, 0, sizeoftick);
-            this.draw_tick(this.origin.x - index * step, this.origin.y, 0, sizeoftick);
+            this.draw_tick(this.origin.x + index * step, this.origin.y, 0, this.ticksize);
+            this.draw_tick(this.origin.x - index * step, this.origin.y, 0, this.ticksize);
             index++;
         }
      
     }
     // draw ticks for y axis
-    draw_ticks_for_y(step_y){
+    draw_ticks_for_y(){
+        var step_y = this.step_xy;
         var step = step_y * this.scale_y;
-        var sizeoftick = 5;
+        
         let index = 1;
         while(index*step_y < Math.abs(this.range_y.end_y) || index*step_y < Math.abs(this.range_y.start_y) ){
-            this.draw_tick(this.origin.x, this.origin.y + index * step, sizeoftick, 0);
-            this.draw_tick(this.origin.x, this.origin.y - index * step, sizeoftick, 0);
+            this.draw_tick(this.origin.x, this.origin.y + index * step, this.ticksize, 0);
+            this.draw_tick(this.origin.x, this.origin.y - index * step, this.ticksize, 0);
             index++;
         }
        
@@ -202,8 +218,8 @@ export class CartesianCoordinateSystem {
         this.reset_style();
         //draw x,y and ticks
         this.draw_x_and_y_axis();
-        this.draw_ticks_for_x(1);
-        this.draw_ticks_for_y(1);
+        this.draw_ticks_for_x();
+        this.draw_ticks_for_y();
     }
     
     // plot an array 
