@@ -1,0 +1,8 @@
+body{
+    --width:100%;
+    margin: 0;
+    
+}
+canvas#simpleCanvas{
+    border:1px lightgray solid;
+}
