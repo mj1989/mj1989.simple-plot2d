@@ -69,44 +69,57 @@ myCanvas.addEventListener("wheel", resize_ccs_and_diagrams);
 * interation goal is to add new diagram and remove
 */
 const menu = document.getElementById('menu');
-console.log(menu);
+
 
 //listener for add button
 const addDiagramButton = document.getElementById('add_diagram_button');
 let removeDiagramButtons = document.getElementsByClassName('remove_diagram_button');
 
-// testme
+// adding new div element with diagram
 function addDiagramDiv(){
+    // random color
+    let random_color = 'rgb('+Math.random()*255+', '+Math.random()*255+', '+Math.random()*255+')';
+    // get string of formula to plot
     let stringFormulatoPlot = document.getElementById('formula_value').value;
-        menu.lastElementChild.insertAdjacentHTML('afterend',
-    '<div class="diagram">'+
-    '<form action="">'+
-    '<label for="fformula">formula:</label>'+
-    '<input type="text" value="' + stringFormulatoPlot +'">'+
-    '</form></div>');
+    // instert and create HTML to add at the end
+    menu.lastElementChild.insertAdjacentHTML('afterend',
+    `<div class="diagram">
+        <div class="diagramsectionlvl1">
+            <div style="width: 35%; height: 5px; background-color: ${random_color};"></div>
+            <button class="close-button buttongray" aria-label="Close alert" type="button" data-close>
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="diagramsectionlvl2">
+            ${stringFormulatoPlot}
+        </div>
+    </div>`);
+
     removeDiagramButtons = document.getElementsByClassName('remove_diagram_button');
     removeDiagramButtons.forEach(remDiagramButton => {
         remDiagramButton.addEventListener('click', removeLastDiagramDiv);
     });
-    //adding plot
-    // random color
-    let random_color = 'rgb('+Math.random()*255+', '+Math.random()*255+', '+Math.random()*255+')';
+    // adding plot
+    
     someCartesianCS.append_diagram_to_list(new Diagram(
         someCartesianCS,
         stringFormulatoPlot,
         random_color, 0.7));
     someCartesianCS.draw_diagrams();
     someCartesianCS.plot_diagrams();
-    console.log(someCartesianCS.list_of_diagrams);
+    
     
 }
 function removeLastDiagramDiv(){
+    //when childNodes.lenght is 3 it means that we have only controller left in the UI
+    //so if statement is to ensure to not delete controller
+    if(menu.childNodes.length == 3) return;
     menu.lastElementChild.remove();
     someCartesianCS.remove_last_diagram_from_list();
     someCartesianCS.draw_entire_ccs();
     someCartesianCS.draw_diagrams();
     someCartesianCS.plot_diagrams();
-    console.log(someCartesianCS.list_of_diagrams);
+    
 
 }
 // event listener for add button
