@@ -133,8 +133,10 @@ function removeLastDiagramDiv(){
 
 }
 function closeGivenDiagram(button){
-    
-    let idName = button.path[0].getAttribute('id');
+    console.log(button.composedPath());
+    let path = button.composedPath();
+    //let idName = button.path[0].getAttribute('id');
+    let idName = path[0].getAttribute('id');
     let divById = document.getElementById('diag'+idName);
        
     
