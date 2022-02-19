@@ -44,10 +44,17 @@ export class CartesianCoordinateSystem {
     // add a diagram to the list
     append_diagram_to_list(aDiagram){
         this.list_of_diagrams.push(aDiagram);
+        
     }
     // remove a diagram from the list
     remove_last_diagram_from_list(){
         this.list_of_diagrams.pop();
+    }
+    // remove one diagram from diagrams list by the given diagram index
+    remove_diagram_by_ID(diagramIndex){
+        
+        this.list_of_diagrams.splice(diagramIndex, 1);
+        
     }
     //draw diagrams
     draw_diagrams(){
