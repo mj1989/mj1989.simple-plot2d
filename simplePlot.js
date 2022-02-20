@@ -43,6 +43,9 @@ function move_ccs_and_diagrams(e){
     someCartesianCS.plot_diagrams();
     xxx = e.offsetX;
     yyy = e.offsetY;
+    someCartesianCS.draw_pointer_coords(
+        (e.clientX-someCartesianCS.origin.x)/someCartesianCS.scale_x, 
+        (-e.clientY+someCartesianCS.origin.y)/someCartesianCS.scale_y);
 
 }
 
@@ -59,6 +62,9 @@ function resize_ccs_and_diagrams(wheel) {
    someCartesianCS.draw_entire_ccs();
    someCartesianCS.draw_diagrams();
    someCartesianCS.plot_diagrams();
+   someCartesianCS.draw_pointer_coords(
+       (wheel.clientX-someCartesianCS.origin.x)/someCartesianCS.scale_x, 
+       (-wheel.clientY+someCartesianCS.origin.y)/someCartesianCS.scale_y);
 }
 
 myCanvas.addEventListener("wheel", resize_ccs_and_diagrams);
@@ -202,7 +208,8 @@ removeDiagramButtons.forEach(remDiagramButton => {
 function show_pointer_x_y(pointer){
     let pointerX = (pointer.clientX-someCartesianCS.origin.x)/someCartesianCS.scale_x;
     let pointerY = (-pointer.clientY+someCartesianCS.origin.y)/someCartesianCS.scale_y;
-    console.log(pointerX, pointerY);
+    //console.log(pointerX, pointerY);
+    someCartesianCS.draw_pointer_coords(pointerX, pointerY);
 }
 // mouse coordinates trakcher inside the canvas
 // to show point x and y to let user examine more the diagram

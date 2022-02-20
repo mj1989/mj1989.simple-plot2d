@@ -273,6 +273,21 @@ export class CartesianCoordinateSystem {
         this.draw_numbers_on_axis_x();
         this.draw_numbers_on_axis_y();
     }
+    // draw rect with coords
+    draw_pointer_coords(pointerX, pointerY){
+        let pointerX_string = pointerX.toFixed(2).toString();
+        let pointerY_string = pointerY.toFixed(2).toString();
+        let maxWidth = 120;
+
+        this.context.clearRect(this.width-maxWidth, this.height-21, maxWidth, 21);
+        
+        
+        this.context.font = '10px Arial';
+        this.context.fillStyle = 'gray';
+               
+        this.context.fillText('(X:'+pointerX_string, this.width-maxWidth, this.height-5, maxWidth);
+        this.context.fillText('; Y:'+pointerY_string+')', this.width-maxWidth*2/3, this.height-5, maxWidth);  
+    }
     
     // plot an array 
     plot_array_2d(someDiagram){       
