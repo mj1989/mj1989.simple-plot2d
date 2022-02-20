@@ -14,6 +14,9 @@ export class CartesianCoordinateSystem {
         this.step_xy = step_xy;
         // and set tick size which is lenght of a ticks on x and y axis
         this.ticksize = ticksize;
+        // set number size of the numbers on the axis default is 16px 
+        // but by changescale it will change
+        this.numberSize = 16;
         // set axis x and y scales and ranges
         // idea is to go from width and height in pixeld to xy coord
         this.scale_x = 100; // 40px is one, 80px is two
@@ -104,11 +107,14 @@ export class CartesianCoordinateSystem {
         this.scale_x = this.scale_x + kx/10;
         this.scale_y = this.scale_y + ky/10;
         // scalling ticks for x and y axis
+        // and scalling numberSize for numbers on axis
         if(kx < 0 && this.ticksize > 1){
             this.ticksize = this.ticksize - 2;
+            this.numberSize = this.numberSize - 2;
         }
         if(kx > 0){
             this.ticksize = this.ticksize + 2;
+            this.numberSize = this.numberSize + 2;
         }        
         this.change_origin_x_y_absolute(this.origin.x, this.origin.y);
     }
@@ -211,6 +217,44 @@ export class CartesianCoordinateSystem {
         }
        
     }
+    // draw number on axis X
+    draw_number_on_axis(number, positionX, positionY){
+        let numbetString = number.toString();
+        //let x = this.origin.x+this.scale_x;
+        //let y = this.origin.y + 16;
+        let maxWidth = 2*this.numberSize;
+        this.context.font = this.numberSize.toString()+'px Arial';
+        this.context.fillStyle = 'gray';
+        this.context.fillText(numbetString, positionX, positionY, maxWidth);        
+    }
+    // draw all number along entire X axis
+    draw_numbers_on_axis_x(){
+        var step_x = this.step_xy;
+        var step = step_x * this.scale_x;
+        //draw 0 at origin
+        this.draw_number_on_axis(0, this.origin.x+3, this.origin.y+this.numberSize);
+        //drawing loop for all x axis
+        let index = 1;
+        while(index*step_x < Math.abs(this.range_x.end_x) || index*step_x < Math.abs(this.range_x.start_x)){
+            this.draw_number_on_axis(index, this.origin.x + index * step, this.origin.y+this.numberSize);
+            this.draw_number_on_axis(-index, this.origin.x - index * step, this.origin.y+this.numberSize);
+            index++;
+        }
+     
+    }
+    // draw all number along entire Y axis
+    draw_numbers_on_axis_y(){
+        var step_y = this.step_xy;
+        var step = step_y * this.scale_y;
+        //drawing loop for all y axis
+        let index = 1;
+        while(index*step_y < Math.abs(this.range_y.end_y) || index*step_y < Math.abs(this.range_y.start_y) ){
+            this.draw_number_on_axis(-index, this.origin.x+3, this.origin.y + index * step);
+            this.draw_number_on_axis(index, this.origin.x+3, this.origin.y - index * step);
+            index++;
+        }
+     
+    }
     // reset style
     reset_style(){
         //reset style
@@ -225,6 +269,9 @@ export class CartesianCoordinateSystem {
         this.draw_x_and_y_axis();
         this.draw_ticks_for_x();
         this.draw_ticks_for_y();
+        //draw number on axis x
+        this.draw_numbers_on_axis_x();
+        this.draw_numbers_on_axis_y();
     }
     
     // plot an array 
