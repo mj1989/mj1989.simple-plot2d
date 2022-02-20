@@ -214,7 +214,7 @@ function show_pointer_x_y(pointer){
 // mouse coordinates trakcher inside the canvas
 // to show point x and y to let user examine more the diagram
 let mouseTracker = document.getElementById('simpleCanvas');
-//adding event listener to mouse tracker
+//adding event listener to mouse tracker.
 mouseTracker.addEventListener("mousemove", show_pointer_x_y);
 
 
