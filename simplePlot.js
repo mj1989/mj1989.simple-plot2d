@@ -198,8 +198,17 @@ removeDiagramButtons.forEach(remDiagramButton => {
         closeDiagramButton.addEventListener('click', closeGivenDiagram);
     });
 
-
-
+//show x y of the pointer/mouse or whatever
+function show_pointer_x_y(pointer){
+    let pointerX = (pointer.clientX-someCartesianCS.origin.x)/someCartesianCS.scale_x;
+    let pointerY = (-pointer.clientY+someCartesianCS.origin.y)/someCartesianCS.scale_y;
+    console.log(pointerX, pointerY);
+}
+// mouse coordinates trakcher inside the canvas
+// to show point x and y to let user examine more the diagram
+let mouseTracker = document.getElementById('simpleCanvas');
+//adding event listener to mouse tracker
+mouseTracker.addEventListener("mousemove", show_pointer_x_y);
 
 
 
