@@ -84,6 +84,7 @@ function addDiagramDiv(){
     let random_color = 'rgb('+Math.random()*255+', '+Math.random()*255+', '+Math.random()*255+')';
     // get string of formula to plot
     let stringFormulatoPlot = document.getElementById('formula_value').value;
+    
     // adding plot   
     let addedDiagram =  new Diagram(
         someCartesianCS,
@@ -95,6 +96,7 @@ function addDiagramDiv(){
     // get index of added diagram
     let indexDiagram = someCartesianCS.list_of_diagrams.indexOf(addedDiagram);
     // instert and create HTML to add at the end
+    let appostrof = '`';
     menu.lastElementChild.insertAdjacentHTML('afterend',
     `<div class="diagram" id="diag${indexDiagram}">
         <div class="diagramsectionlvl1">
@@ -102,9 +104,13 @@ function addDiagramDiv(){
             <input id="${indexDiagram}" class="close-button buttongray"  type="button" value="&times;">
         </div>
         <div class="diagramsectionlvl2">
-            ${stringFormulatoPlot}
+            ${appostrof}${stringFormulatoPlot}${appostrof}
         </div>
     </div>`);
+    
+    // use mathjax to render ASCII Math 
+    MathJax.Hub.Typeset();
+    
     // add listner for removing last diagram
     removeDiagramButtons = document.getElementsByClassName('remove_diagram_button');
     removeDiagramButtons.forEach(remDiagramButton => {
