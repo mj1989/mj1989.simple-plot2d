@@ -269,7 +269,7 @@ export class CartesianCoordinateSystem {
         this.draw_x_and_y_axis();
         this.draw_ticks_for_x();
         this.draw_ticks_for_y();
-        //draw number on axis x
+        //draw number on axis x and y
         this.draw_numbers_on_axis_x();
         this.draw_numbers_on_axis_y();
     }
