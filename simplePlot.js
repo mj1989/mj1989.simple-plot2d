@@ -90,6 +90,8 @@ function addDiagramDiv(){
         someCartesianCS,
         stringFormulatoPlot,
         random_color, 0.7);
+
+        
     someCartesianCS.append_diagram_to_list(addedDiagram);
     someCartesianCS.draw_diagrams();
     someCartesianCS.plot_diagrams();
