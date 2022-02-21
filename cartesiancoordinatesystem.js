@@ -294,21 +294,41 @@ export class CartesianCoordinateSystem {
         //set style based on Diagram properties
         this.context.strokeStyle = someDiagram.diagramStyle.diagramColor;
         this.context.lineWidth = someDiagram.diagramStyle.diagramLineWidth;
-      
+    
         let index = 0;
         while(index < someDiagram.array_of_Points.length-1){
-            
-            this.context.beginPath();           
-            this.context.moveTo(
-                this.origin.x +
-                someDiagram.array_of_Points[index].x*this.scale_x,                 
-                this.origin.y-someDiagram.array_of_Points[index].y*this.scale_y);
 
-            this.context.lineTo(
-                this.origin.x +
-                someDiagram.array_of_Points[index+1].x*this.scale_x,
-                this.origin.y-someDiagram.array_of_Points[index+1].y*this.scale_y);   
-            this.context.stroke();            
+            
+            
+            //simple if for asymptote check with different singns 
+            //for example if you have 1/x from left side of 0 you have -infinity and from right side
+            //of zero you have +infinity
+            if(someDiagram.array_of_Points[index].y*someDiagram.array_of_Points[index+1].y < -1000)
+            {
+                
+                //draw like in index is asymptote
+                this.context.moveTo(
+                    this.origin.x +
+                    someDiagram.array_of_Points[index].x*this.scale_x,                 
+                    this.origin.y-someDiagram.array_of_Points[index].y*this.scale_y);
+            }
+            else{
+                //draw like there is no asymptote
+                this.context.beginPath();           
+                this.context.moveTo(
+                    this.origin.x +
+                    someDiagram.array_of_Points[index].x*this.scale_x,                 
+                    this.origin.y-someDiagram.array_of_Points[index].y*this.scale_y);
+
+                this.context.lineTo(
+                    this.origin.x +
+                    someDiagram.array_of_Points[index+1].x*this.scale_x,
+                    this.origin.y-someDiagram.array_of_Points[index+1].y*this.scale_y); 
+                
+                this.context.stroke();  
+                    
+            }
+                
             index++;
          }  
 
