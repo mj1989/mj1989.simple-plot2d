@@ -204,11 +204,30 @@ removeDiagramButtons.forEach(remDiagramButton => {
         closeDiagramButton.addEventListener('click', closeGivenDiagram);
     });
 
-//show x y of the pointer/mouse or whatever
+//show x y of the pointer/mouse
 function show_pointer_x_y(pointer){
     let pointerX = (pointer.clientX-someCartesianCS.origin.x)/someCartesianCS.scale_x;
     let pointerY = (-pointer.clientY+someCartesianCS.origin.y)/someCartesianCS.scale_y;
+    // I will try to use same pointer event to track if coursor is over a diagram
     //console.log(pointerX, pointerY);
+    someCartesianCS.list_of_diagrams.forEach(diagram => {
+        //for each diagram on the list check if tracked x,y of courses fit to points of diagram
+        //with some tolerance, if tolerance = 0 then we look for exactly same X,Y
+        let tolerance = 0.1;
+        
+        if(diagram.hasPoint(pointerX, pointerY, tolerance)){
+            someCartesianCS.draw_entire_ccs();
+            someCartesianCS.draw_diagrams();
+            someCartesianCS.plot_diagrams();  
+        }
+        else{
+            //diagram.isHighlighted = false;
+            someCartesianCS.draw_entire_ccs();
+            someCartesianCS.draw_diagrams();
+            someCartesianCS.plot_diagrams();  
+        }
+        
+    });
     someCartesianCS.draw_pointer_coords(pointerX, pointerY);
 }
 // mouse coordinates trakcher inside the canvas

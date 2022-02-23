@@ -21,6 +21,8 @@ export class Diagram {
         // formula to plot based on mathjs
         this.formula_to_plot = formula_to_plot;
         this.array_of_Points = [];
+        // default isHighlighted is false
+        this.isHighlighted = false;
     }
     // resize range of x domain of a diagram
     resize_range_of_x(){
@@ -84,9 +86,26 @@ export class Diagram {
 
         }
     }
-    isHighlighted(){
-        if(false)
-        return false;
+   
+    // method to check if diagram has certain point x,y
+    hasPoint(x, y, tolerance){
+        // x and y are coords from coursor
+        let result_hasPoint = false;
+        this.isHighlighted = false;
+        this.array_of_Points.forEach(point =>{
+            if( x >= point.x - tolerance && x <= point.x + tolerance &&
+                y >= point.y - tolerance && y <= point.y + tolerance ){
+                    result_hasPoint = true;
+                    this.isHighlighted = true;
+                    //console.log(result_hasPoint, this.isHighlighted);
+                    
+                    return result_hasPoint;
+                }
+               
+        });
+        
+        //console.log(result_hasPoint, this.isHighlighted);
+        
     }
     // refresh graph
     refresh_graph(){
