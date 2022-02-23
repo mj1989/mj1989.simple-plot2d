@@ -294,7 +294,15 @@ export class CartesianCoordinateSystem {
         //set style based on Diagram properties
         this.context.strokeStyle = someDiagram.diagramStyle.diagramColor;
         this.context.lineWidth = someDiagram.diagramStyle.diagramLineWidth;
-    
+        //blur on effect helo to highlight
+        if(someDiagram.isHighlighted())
+        {
+            this.context.shadowColor = "red";
+            this.context.shadowBlur = 15;   
+            this.context.lineWidth = 1;
+        }
+        
+        
         let index = 0;
         while(index < someDiagram.array_of_Points.length-1){
 
@@ -325,12 +333,19 @@ export class CartesianCoordinateSystem {
                     someDiagram.array_of_Points[index+1].x*this.scale_x,
                     this.origin.y-someDiagram.array_of_Points[index+1].y*this.scale_y); 
                 
+                
+                
+                
                 this.context.stroke();  
                     
             }
                 
             index++;
-         }  
+         } 
+         
+         //blur off
+         //blur
+        this.context.shadowBlur = 0;
 
     }
 }

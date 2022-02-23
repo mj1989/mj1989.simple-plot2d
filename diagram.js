@@ -84,6 +84,10 @@ export class Diagram {
 
         }
     }
+    isHighlighted(){
+        if(false)
+        return false;
+    }
     // refresh graph
     refresh_graph(){
         this.resize_range_of_x();
@@ -105,5 +109,5 @@ export class Diagram {
         return this.array_of_Points;
     }
     
-    }
+}
 
