@@ -63,6 +63,9 @@ canvas#simpleCanvas{
 .diagramsectionlvl2{
     text-align: center;
 }
+#error{
+    padding: 10px;
+}
 .error{
     color: rgb(224, 149, 149);
     background-color: rgb(233, 224, 224);

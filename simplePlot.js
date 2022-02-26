@@ -161,6 +161,7 @@ function removeLastDiagramDiv(){
     if(menu.childNodes.length == 3) return;
     menu.lastElementChild.remove();
     someCartesianCS.remove_last_diagram_from_list();
+    document.getElementById('error').innerHTML = `Removed last diagram`;
     someCartesianCS.draw_entire_ccs();
     someCartesianCS.draw_diagrams();
     someCartesianCS.plot_diagrams();
@@ -173,9 +174,11 @@ function closeGivenDiagram(button){
     //let idName = button.path[0].getAttribute('id');
     let idName = path[0].getAttribute('id');
     let divById = document.getElementById('diag'+idName);
+
        
     
     someCartesianCS.remove_diagram_by_ID(idName);
+    document.getElementById('error').innerHTML = `Removed diagram`;
     divById.remove();
 
 
