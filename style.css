@@ -63,6 +63,25 @@ canvas#simpleCanvas{
 .diagramsectionlvl2{
     text-align: center;
 }
+.panel{
+    display: flex;
+    
+}
+#help{
+    padding: 10px;
+    position: relative;
+    display: inline-block;
+}
+.help-content{
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 360px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding:10px;
+    z-index: 1;
+}
+#help:hover .help-content {display: block;}
 #error{
     padding: 10px;
 }
