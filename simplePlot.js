@@ -114,7 +114,9 @@ function addDiagramDiv(){
     let addedDiagram =  new Diagram(
         someCartesianCS,
         stringFormulatoPlot,
-        random_color, 0.7);
+        random_color, 
+        0.7,
+        someCartesianCS.list_of_diagrams.length);
 
         
     someCartesianCS.append_diagram_to_list(addedDiagram);
@@ -230,20 +232,29 @@ function show_pointer_x_y(pointer){
     // I will try to use same pointer event to track if coursor is over a diagram
     //console.log(pointerX, pointerY);
     someCartesianCS.list_of_diagrams.forEach(diagram => {
+        
+        let tempDiagramDiv = document.getElementById('diag'+ diagram.diagramID.toString());
         //for each diagram on the list check if tracked x,y of courses fit to points of diagram
         //with some tolerance, if tolerance = 0 then we look for exactly same X,Y
         let tolerance = 0.1;
         
-        if(diagram.hasPoint(pointerX, pointerY, tolerance)){
+        diagram.hasPoint(pointerX, pointerY, tolerance);
+
+        if(diagram.isHighlighted){
             someCartesianCS.draw_entire_ccs();
             someCartesianCS.draw_diagrams();
             someCartesianCS.plot_diagrams();  
+            
+            //console.log(diagram.diagramID);
+            tempDiagramDiv.setAttribute('class', 'highlight');
+            
         }
         else{
             //diagram.isHighlighted = false;
             someCartesianCS.draw_entire_ccs();
             someCartesianCS.draw_diagrams();
             someCartesianCS.plot_diagrams();  
+            tempDiagramDiv.setAttribute('class', 'no-highlight');
         }
         
     });

@@ -5,7 +5,8 @@ export class Diagram {
         CartesianCoordinateSystem, 
         formula_to_plot, 
         color, 
-        line_width){
+        line_width, 
+        diagramID){
         // link to CCS
         this.CartesianCoordinateSystem = CartesianCoordinateSystem;
         //style, like color, dash or solid
@@ -23,6 +24,8 @@ export class Diagram {
         this.array_of_Points = [];
         // default isHighlighted is false
         this.isHighlighted = false;
+        // diagramID
+        this.diagramID = diagramID;
     }
     // resize range of x domain of a diagram
     resize_range_of_x(){
@@ -98,7 +101,7 @@ export class Diagram {
                     result_hasPoint = true;
                     this.isHighlighted = true;
                     //console.log(result_hasPoint, this.isHighlighted);
-                    
+                   
                     return result_hasPoint;
                 }
                

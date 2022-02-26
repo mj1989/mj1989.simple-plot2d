@@ -71,3 +71,21 @@ canvas#simpleCanvas{
     color:rgb(66, 196, 98);
     background-color: rgb(199, 255, 197);
 }
+.highlight{
+    max-width: 450px;
+    min-width: 150px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid rgb(110, 202, 148);
+    background-color: rgb(199, 255, 197);
+    font-size: 10px;
+}
+.no-highlight{
+    max-width: 450px;
+    min-width: 150px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid lightgray;
+    background-color: rgb(255, 255, 255);
+    font-size: 10px;
+}
