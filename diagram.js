@@ -91,24 +91,24 @@ export class Diagram {
     }
    
     // method to check if diagram has certain point x,y
-    hasPoint(x, y, tolerance){
-        // x and y are coords from coursor
+    hasPoint(xx, yy, tolerance){
+        // x and y are coords from coursor        
         let result_hasPoint = false;
         this.isHighlighted = false;
-        this.array_of_Points.forEach(point =>{
-            if( x >= point.x - tolerance && x <= point.x + tolerance &&
-                y >= point.y - tolerance && y <= point.y + tolerance ){
-                    result_hasPoint = true;
-                    this.isHighlighted = true;
-                    //console.log(result_hasPoint, this.isHighlighted);
-                   
-                    return result_hasPoint;
-                }
+
+        // mathjs
+        const node2 = math.parse(this.formula_to_plot);
+        const code2 = node2.compile();
+        let scope = {
+            x : xx
+        };
+              
+        if( code2.evaluate(scope) >= yy - tolerance && code2.evaluate(scope) <= yy + tolerance){
+                result_hasPoint = true;
+                this.isHighlighted = true;                       
+            }
                
-        });
-        
-        //console.log(result_hasPoint, this.isHighlighted);
-        
+        return result_hasPoint;              
     }
     // refresh graph
     refresh_graph(){

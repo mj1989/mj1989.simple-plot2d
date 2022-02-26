@@ -297,7 +297,7 @@ export class CartesianCoordinateSystem {
         //blur on effect helo to highlight
         if(someDiagram.isHighlighted)
         {
-            this.context.shadowColor = "red";
+            this.context.shadowColor = "green";
             this.context.shadowBlur = 15;   
             this.context.lineWidth = 1;
         }

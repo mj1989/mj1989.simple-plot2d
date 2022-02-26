@@ -230,9 +230,17 @@ removeDiagramButtons.forEach(remDiagramButton => {
 
 //show x y of the pointer/mouse
 function show_pointer_x_y(pointer){
-    let pointerX = (pointer.clientX-someCartesianCS.origin.x)/someCartesianCS.scale_x;
-    let pointerY = (-pointer.clientY+someCartesianCS.origin.y)/someCartesianCS.scale_y;
-    // I will try to use same pointer event to track if coursor is over a diagram
+    let pointerX = (pointer.offsetX-someCartesianCS.origin.x)/someCartesianCS.scale_x;
+    let pointerY = (-pointer.offsetY+someCartesianCS.origin.y)/someCartesianCS.scale_y;
+    
+    someCartesianCS.draw_pointer_coords(pointerX, pointerY);
+}
+
+// highlighting diagram when pointer is on diagram
+function highlight_pointer_x_y(pointer){
+    let pointerX = (pointer.offsetX-someCartesianCS.origin.x)/someCartesianCS.scale_x;
+    let pointerY = (-pointer.offsetY+someCartesianCS.origin.y)/someCartesianCS.scale_y;
+     // I will try to use same pointer event to track if coursor is over a diagram
     //console.log(pointerX, pointerY);
     someCartesianCS.list_of_diagrams.forEach(diagram => {
         
@@ -247,7 +255,7 @@ function show_pointer_x_y(pointer){
             someCartesianCS.draw_entire_ccs();
             someCartesianCS.draw_diagrams();
             someCartesianCS.plot_diagrams();  
-            
+            someCartesianCS.draw_pointer_coords(pointerX, pointerY);
             //console.log(diagram.diagramID);
             tempDiagramDiv.setAttribute('class', 'highlight');
             
@@ -256,18 +264,20 @@ function show_pointer_x_y(pointer){
             //diagram.isHighlighted = false;
             someCartesianCS.draw_entire_ccs();
             someCartesianCS.draw_diagrams();
-            someCartesianCS.plot_diagrams();  
+            someCartesianCS.plot_diagrams(); 
+            someCartesianCS.draw_pointer_coords(pointerX, pointerY);
             tempDiagramDiv.setAttribute('class', 'no-highlight');
         }
         
     });
-    someCartesianCS.draw_pointer_coords(pointerX, pointerY);
 }
 // mouse coordinates trakcher inside the canvas
 // to show point x and y to let user examine more the diagram
 let mouseTracker = document.getElementById('simpleCanvas');
 //adding event listener to mouse tracker.
 mouseTracker.addEventListener("mousemove", show_pointer_x_y);
+//adding event listener for highlighting.
+mouseTracker.addEventListener("mousemove", highlight_pointer_x_y);
 
 
 
