@@ -1,11 +1,10 @@
 # Simple Plot2d
 Descrption: The goal of this project is pure didactic purpose. Which is better understanding of javascript and canvas...
-## ToDo
+## Done
 1. user can add and delete diagrams
     - user can add/delete like in stack
     - user can add/delete arbitrary diagram
 2. user interface
-    - user can checkbox ticks, axis names, units, grid
     - there is monitor with messages and errors
     - there is brief help how to user syntax in mathjs
     - implementation of displaying coordinates of points
