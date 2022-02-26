@@ -90,7 +90,26 @@ function addDiagramDiv(){
     let random_color = 'rgb('+Math.random()*255+', '+Math.random()*255+', '+Math.random()*255+')';
     // get string of formula to plot
     let stringFormulatoPlot = document.getElementById('formula_value').value;
+    let appostrof = '`';
     
+    var expr = math.parse(stringFormulatoPlot);
+    // a and b do not yet exist...
+
+    try {
+        let scope = {
+            x : 1
+        }
+        expr.evaluate(scope);
+        document.getElementById('error').innerHTML = `Added: ${appostrof}${stringFormulatoPlot}${appostrof}`;
+        document.getElementById('error').setAttribute('class', 'not-error');
+        // use mathjax to render ASCII Math 
+        //MathJax.Hub.Typeset();
+    }
+    catch (err) {
+        document.getElementById('error').innerHTML = err.toString(); // Error: Undefined symbol a
+        document.getElementById('error').setAttribute('class', 'error');
+        return
+    }
     // adding plot   
     let addedDiagram =  new Diagram(
         someCartesianCS,
@@ -104,7 +123,7 @@ function addDiagramDiv(){
     // get index of added diagram
     let indexDiagram = someCartesianCS.list_of_diagrams.indexOf(addedDiagram);
     // instert and create HTML to add at the end
-    let appostrof = '`';
+    
     menu.lastElementChild.insertAdjacentHTML('afterend',
     `<div class="diagram" id="diag${indexDiagram}">
         <div class="diagramsectionlvl1">

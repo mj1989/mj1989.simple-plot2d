@@ -73,7 +73,7 @@ export class Diagram {
             // that is why I can dynamicly make longer steps and less points
             //so basicly it is dynamicly changing step
             if(differential2 == differential1){
-                step = step * 1.6;
+                step = step * 1.1;
             }
             if(differential1 > mindiff && step > minstep){
                 step = step/(1+differential1);

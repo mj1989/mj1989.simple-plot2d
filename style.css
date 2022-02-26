@@ -22,10 +22,12 @@ canvas#simpleCanvas{
     max-width: 80%;
 }
 .diagram {
-    width: 150px;
+    max-width: 450px;
+    min-width: 150px;
     margin: 5px;
     padding: 5px;
     border: 1px solid lightgray;
+    font-size: 10px;
 }
 .diagram input, label{
    /* margin:5px; */
@@ -60,4 +62,12 @@ canvas#simpleCanvas{
 }
 .diagramsectionlvl2{
     text-align: center;
+}
+.error{
+    color: rgb(224, 149, 149);
+    background-color: rgb(233, 224, 224);
+}
+.not-error{
+    color:rgb(66, 196, 98);
+    background-color: rgb(199, 255, 197);
 }
