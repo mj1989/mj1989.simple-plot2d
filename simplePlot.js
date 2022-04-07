@@ -10,40 +10,14 @@ myCanvas.height = window.innerHeight*0.8;
 
 // create object and draw axis
 var someCartesianCS = new CartesianCoordinateSystem(myCanvas, 1, 5);
+// link myCanvas to someCartesianCS it is a pointer to CCS
+myCanvas.pointerToCSS = someCartesianCS;
 someCartesianCS.draw_entire_ccs();
 
-// additional variables 
-// boolean to check if entire cartesian system is moving
-let is_ccs_movig = false;
-// starting point before move default is in the origin of css
-let xOfCCSBeforeMove = 0;
-let yOfCCSBeforeMove = 0;
-
-function startPosition(e){
-    is_ccs_movig = true;
-    xOfCCSBeforeMove = e.offsetX;
-    yOfCCSBeforeMove = e.offsetY;
-}
-function finishedPosition(){
-    is_ccs_movig = false;
-}
-// moving entire coordinate system and all diagram like a map
-function move_ccs_and_diagrams(e){
-    if(!is_ccs_movig) return;
-    someCartesianCS.change_origin_x_y_relevant(e.offsetX-xOfCCSBeforeMove, e.offsetY-yOfCCSBeforeMove);
-    someCartesianCS.drawAll();
-    xOfCCSBeforeMove = e.offsetX;
-    yOfCCSBeforeMove = e.offsetY;
-    someCartesianCS.draw_pointer_coords(
-        (e.clientX-someCartesianCS.origin.x)/someCartesianCS.scale_x, 
-        (-e.clientY+someCartesianCS.origin.y)/someCartesianCS.scale_y);
-
-}
-
 // adding event listeners to my canvas regarding moving css and diagrams
-myCanvas.addEventListener("mousedown", startPosition);
-myCanvas.addEventListener("mouseup", finishedPosition);
-myCanvas.addEventListener("mousemove", move_ccs_and_diagrams);
+myCanvas.addEventListener("mousedown", someCartesianCS.startPosition);
+myCanvas.addEventListener("mouseup", someCartesianCS.finishedPosition);
+myCanvas.addEventListener("mousemove", someCartesianCS.move_ccs_and_diagrams);
 
 
 // resizing, scalling entire coordinate systems with ticks and diagrams

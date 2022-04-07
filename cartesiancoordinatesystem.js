@@ -38,6 +38,12 @@ export class CartesianCoordinateSystem {
 
         // plan some plave for list of diagrams
         this.list_of_diagrams = [];
+        // additional variables 
+        // boolean to check if entire cartesian system is moving
+        this.is_ccs_movig = false;
+        // starting point before move default is in the origin of css
+        this.xOfCCSBeforeMove = 0;
+        this.yOfCCSBeforeMove = 0;
         
     }
     // add entire vector
@@ -354,4 +360,29 @@ export class CartesianCoordinateSystem {
         this.context.shadowBlur = 0;
 
     }
+    startPosition(e){
+        //const self = e.path[0].pointerToCSS;
+        const self = e.composedPath()[0].pointerToCSS;
+        self.is_ccs_movig = true;
+        self.xOfCCSBeforeMove = e.offsetX;
+        self.yOfCCSBeforeMove = e.offsetY;
+    }
+    finishedPosition(e){
+        //const self = e.path[0].pointerToCSS;
+        const self = e.composedPath()[0].pointerToCSS;
+        self.is_ccs_movig = false;
+    }
+
+    move_ccs_and_diagrams(e){
+        //const self = e.path[0].pointerToCSS;
+        const self = e.composedPath()[0].pointerToCSS;
+        if(!self.is_ccs_movig) return
+        self.change_origin_x_y_relevant(e.offsetX - self.xOfCCSBeforeMove, e.offsetY-self.yOfCCSBeforeMove );
+        self.drawAll();
+        self.xOfCCSBeforeMove = e.offsetX;
+        self.yOfCCSBeforeMove = e.offsetY;
+        self.draw_pointer_coords(
+            (e.clientX-self.origin.x)/self.scale_x, 
+            (-e.clientY+self.origin.y)/self.scale_y);
+        }
 }
