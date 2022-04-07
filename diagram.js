@@ -43,8 +43,8 @@ export class Diagram {
         var e_range_x = this.range_x.end_x;
         var step = (e_range_x - s_range_x)/howmanypoints;
 
-        let mindiff = 0.01;
-        let minstep = 0.005;
+        let mindiff = 0.02;
+        let minstep = 0.01;
         step = minstep;
         
         let x_domain = s_range_x;

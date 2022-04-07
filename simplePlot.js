@@ -4,30 +4,25 @@ import {CartesianCoordinateSystem} from "./cartesiancoordinatesystem.js";
 // load canvas and set up contect for drawing 2d
 const myCanvas = document.getElementById("simpleCanvas");
 
-
 // set up canvas width and height
 myCanvas.width = window.innerWidth;
 myCanvas.height = window.innerHeight*0.8;
-
-
 
 // create object and draw axis
 var someCartesianCS = new CartesianCoordinateSystem(myCanvas, 1, 5);
 someCartesianCS.draw_entire_ccs();
 
-// create diagram
-// Diagram(string formula, ragne start x, range end x, color, line-width, linestyle)
-
-
-
-// how to move entire ccs with diagrams?
+// additional variables 
+// boolean to check if entire cartesian system is moving
 let is_ccs_movig = false;
-let xxx = 0;
-let yyy = 0;
+// starting point before move default is in the origin of css
+let xOfCCSBeforeMove = 0;
+let yOfCCSBeforeMove = 0;
+
 function startPosition(e){
     is_ccs_movig = true;
-    xxx = e.offsetX;
-    yyy = e.offsetY;
+    xOfCCSBeforeMove = e.offsetX;
+    yOfCCSBeforeMove = e.offsetY;
 }
 function finishedPosition(){
     is_ccs_movig = false;
@@ -35,21 +30,17 @@ function finishedPosition(){
 // moving entire coordinate system and all diagram like a map
 function move_ccs_and_diagrams(e){
     if(!is_ccs_movig) return;
-    //someCartesianCS.change_origin_x_y_absolute(e.offsetX, e.offsetY);
-    
-    someCartesianCS.change_origin_x_y_relevant(e.offsetX-xxx, e.offsetY-yyy);
-    someCartesianCS.draw_entire_ccs();
-    someCartesianCS.draw_diagrams();
-    someCartesianCS.plot_diagrams();
-    xxx = e.offsetX;
-    yyy = e.offsetY;
+    someCartesianCS.change_origin_x_y_relevant(e.offsetX-xOfCCSBeforeMove, e.offsetY-yOfCCSBeforeMove);
+    someCartesianCS.drawAll();
+    xOfCCSBeforeMove = e.offsetX;
+    yOfCCSBeforeMove = e.offsetY;
     someCartesianCS.draw_pointer_coords(
         (e.clientX-someCartesianCS.origin.x)/someCartesianCS.scale_x, 
         (-e.clientY+someCartesianCS.origin.y)/someCartesianCS.scale_y);
 
 }
 
-// adding event listeners to my canvas
+// adding event listeners to my canvas regarding moving css and diagrams
 myCanvas.addEventListener("mousedown", startPosition);
 myCanvas.addEventListener("mouseup", finishedPosition);
 myCanvas.addEventListener("mousemove", move_ccs_and_diagrams);
@@ -59,9 +50,7 @@ myCanvas.addEventListener("mousemove", move_ccs_and_diagrams);
 function resize_ccs_and_diagrams(wheel) {
   // Do something with the scroll position
    someCartesianCS.change_scale(wheel.deltaY,wheel.deltaY)
-   someCartesianCS.draw_entire_ccs();
-   someCartesianCS.draw_diagrams();
-   someCartesianCS.plot_diagrams();
+   someCartesianCS.drawAll();
    someCartesianCS.draw_pointer_coords(
        (wheel.clientX-someCartesianCS.origin.x)/someCartesianCS.scale_x, 
        (-wheel.clientY+someCartesianCS.origin.y)/someCartesianCS.scale_y);
@@ -163,9 +152,7 @@ function removeLastDiagramDiv(){
     menu.lastElementChild.remove();
     someCartesianCS.remove_last_diagram_from_list();
     document.getElementById('error').innerHTML = `Removed last diagram`;
-    someCartesianCS.draw_entire_ccs();
-    someCartesianCS.draw_diagrams();
-    someCartesianCS.plot_diagrams();
+    someCartesianCS.drawAll();
        
 
 }
@@ -183,9 +170,7 @@ function closeGivenDiagram(button){
     divById.remove();
 
 
-    someCartesianCS.draw_entire_ccs();
-    someCartesianCS.draw_diagrams();
-    someCartesianCS.plot_diagrams();   
+    someCartesianCS.drawAll();
     
     removeGivenDiagramButtons = document.getElementsByClassName('close-button');
     
@@ -253,9 +238,7 @@ function highlight_pointer_x_y(pointer){
         diagram.hasPoint(pointerX, pointerY, tolerance);
 
         if(diagram.isHighlighted){
-            someCartesianCS.draw_entire_ccs();
-            someCartesianCS.draw_diagrams();
-            someCartesianCS.plot_diagrams();  
+            someCartesianCS.drawAll(); 
             someCartesianCS.draw_pointer_coords(pointerX, pointerY);
             //console.log(diagram.diagramID);
             tempDiagramDiv.setAttribute('class', 'highlight');
@@ -263,9 +246,7 @@ function highlight_pointer_x_y(pointer){
         }
         else{
             //diagram.isHighlighted = false;
-            someCartesianCS.draw_entire_ccs();
-            someCartesianCS.draw_diagrams();
-            someCartesianCS.plot_diagrams(); 
+            someCartesianCS.drawAll();
             someCartesianCS.draw_pointer_coords(pointerX, pointerY);
             tempDiagramDiv.setAttribute('class', 'no-highlight');
         }

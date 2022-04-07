@@ -273,6 +273,12 @@ export class CartesianCoordinateSystem {
         this.draw_numbers_on_axis_x();
         this.draw_numbers_on_axis_y();
     }
+    // draw everything, render entire css with diagrams
+    drawAll(){
+        this.draw_entire_ccs();
+        this.draw_diagrams();
+        this.plot_diagrams();
+    }
     // draw rect with coords
     draw_pointer_coords(pointerX, pointerY){
         let pointerX_string = pointerX.toFixed(2).toString();
