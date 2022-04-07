@@ -19,18 +19,8 @@ myCanvas.addEventListener("mousedown", someCartesianCS.startPosition);
 myCanvas.addEventListener("mouseup", someCartesianCS.finishedPosition);
 myCanvas.addEventListener("mousemove", someCartesianCS.move_ccs_and_diagrams);
 
-
-// resizing, scalling entire coordinate systems with ticks and diagrams
-function resize_ccs_and_diagrams(wheel) {
-  // Do something with the scroll position
-   someCartesianCS.change_scale(wheel.deltaY,wheel.deltaY)
-   someCartesianCS.drawAll();
-   someCartesianCS.draw_pointer_coords(
-       (wheel.clientX-someCartesianCS.origin.x)/someCartesianCS.scale_x, 
-       (-wheel.clientY+someCartesianCS.origin.y)/someCartesianCS.scale_y);
-}
-
-myCanvas.addEventListener("wheel", resize_ccs_and_diagrams);
+// adding event listener to read wheel for rescale css and diagram
+myCanvas.addEventListener("wheel", someCartesianCS.resize_ccs_and_diagrams);
 
 /*
 * front end section for UI

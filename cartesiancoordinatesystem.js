@@ -384,5 +384,15 @@ export class CartesianCoordinateSystem {
         self.draw_pointer_coords(
             (e.clientX-self.origin.x)/self.scale_x, 
             (-e.clientY+self.origin.y)/self.scale_y);
-        }
+    }
+    // resizing, scalling entire coordinate systems with ticks and diagrams
+    resize_ccs_and_diagrams(e){
+        //const self = e.path[0].pointerToCSS;
+        const self = e.composedPath()[0].pointerToCSS;
+        self.change_scale(e.deltaY,e.deltaY)
+        self.drawAll();
+        self.draw_pointer_coords(
+            (e.clientX-self.origin.x)/self.scale_x, 
+            (-e.clientY+self.origin.y)/self.scale_y);
+    }
 }
