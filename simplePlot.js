@@ -94,6 +94,7 @@ function addDiagramDiv(){
     
     var expr = math.parse(stringFormulatoPlot);
     // a and b do not yet exist...
+    if(expr.evaluate({x:1}) == Infinity) return
 
     try {
         let scope = {
